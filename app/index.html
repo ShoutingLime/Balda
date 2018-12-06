@@ -7,51 +7,146 @@
   <meta name="description" content="Игра Балда">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/main.min.css">
 </head>
 
-<body class="page">
+<body class="balda page">
+<h1 class="page-title">Игра «Балда»</h1>
 <section class="playfield" id="playfield">
+  <h2 class="visually-hidden">Поле игры</h2>
   <table class="playsquare" id="playsquare">
     <tbody>
-    <tr class="row1" id="row1">
-      <td id="letter11" class="letter11"><input type="text"></td>
-      <td id="letter12" class="letter12"><input type="text"></td>
-      <td id="letter13" class="letter13"><input type="text"></td>
-      <td id="letter14" class="letter14"><input type="text"></td>
-      <td id="letter15" class="letter15"><input type="text"></td>
+      <tr class="row1" id="row1">
+        <td id="letter11" class="letter11"><label><input type="text" disabled></label></td>
+        <td id="letter12" class="letter12"><label><input type="text"></label></td>
+        <td id="letter13" class="letter13"><label><input type="text" disabled></label></td>
+        <td id="letter14" class="letter14"><label><input type="text"></label></td>
+        <td id="letter15" class="letter15"><label><input type="text" disabled></label></td>
+      </tr>
+      <tr class="row2" id="row2">
+        <td id="letter21" class="letter21"><label><input type="text" disabled></label></td>
+        <td id="letter22" class="letter22"><label><input type="text"></label></td>
+        <td id="letter23" class="letter23"><label><input type="text" disabled></label></td>
+        <td id="letter24" class="letter24"><label><input type="text"></label></td>
+        <td id="letter25" class="letter25"><label><input type="text" disabled></label></td>
+      </tr>
+      <tr class="row3" id="row3">
+        <td id="letter31" class="letter31"><label><input type="text" disabled></label></td>
+        <td id="letter32" class="letter32"><label><input type="text"></label></td>
+        <td id="letter33" class="letter33"><label><input type="text" disabled></label></td>
+        <td id="letter34" class="letter34"><label><input type="text"></label></td>
+        <td id="letter35" class="letter35"><label><input type="text" disabled></label></td>
+      </tr>
+      <tr class="row4" id="row4">
+        <td id="letter41" class="letter41"><label><input type="text" disabled></label></td>
+        <td id="letter42" class="letter42"><label><input type="text"></label></td>
+        <td id="letter43" class="letter43"><label><input type="text" disabled></label></td>
+        <td id="letter44" class="letter44"><label><input type="text"></label></td>
+        <td id="letter45" class="letter45"><label><input type="text" disabled></label></td>
+      </tr>
+      <tr class="row5" id="row5">
+        <td id="letter51" class="letter51"><label><input type="text" disabled></label></td>
+        <td id="letter52" class="letter52"><label><input type="text"></label></td>
+        <td id="letter53" class="letter53"><label><input type="text" disabled></label></td>
+        <td id="letter54" class="letter54"><label><input type="text"></label></td>
+        <td id="letter55" class="letter55"><label><input type="text" disabled></label></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="wordsfield visually-hidden" id="wordsfield">
+    <div class="wordsfield-title">Введите получившееся слово,<br>кликая на соответствующие буквы</div>
+    <div class="wordsfield-wrapper">
+      <div class="wordsfield-space"></div>
+      <button class="wordsfield-ok" id="wordsfield-ok">&#128504;</button>
+    </div>
+    <div class="is-word-in-dictionary"></div>
+
+  </div>
+  <div class="buttons">
+    <button class="cancel" id="cancel">Отменить ход</button>
+    <button class="reset" id="reset">Начать новую игру</button>
+  </div>
+</section>
+<section class="results">
+  <h2 class="results-title">Результаты</h2>
+  <table class="result-table">
+    <tbody>
+    <tr>
+      <th colspan="2" class="name1"><label><input type="text" placeholder="Введите имя игрока №1"></label></th>
+      <th colspan="2" class="name2"><label><input type="text" placeholder="Введите имя игрока №2"></label></th>
     </tr>
-    <tr class="row2" id="row2">
-      <td id="letter21" class="letter21"><input type="text"></td>
-      <td id="letter22" class="letter22"><input type="text"></td>
-      <td id="letter23" class="letter23"><input type="text"></td>
-      <td id="letter24" class="letter24"><input type="text"></td>
-      <td id="letter25" class="letter25"><input type="text"></td>
+    <tr class="steps step0 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
     </tr>
-    <tr class="row3" id="row3">
-      <td id="letter31" class="letter31"><input type="text"></td>
-      <td id="letter32" class="letter32"><input type="text"></td>
-      <td id="letter33" class="letter33"><input type="text"></td>
-      <td id="letter34" class="letter34"><input type="text"></td>
-      <td id="letter35" class="letter35"><input type="text"></td>
+    <tr class="steps step1 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
     </tr>
-    <tr class="row4" id="row4">
-      <td id="letter41" class="letter41"><input type="text"></td>
-      <td id="letter42" class="letter42"><input type="text"></td>
-      <td id="letter43" class="letter43"><input type="text"></td>
-      <td id="letter44" class="letter44"><input type="text"></td>
-      <td id="letter45" class="letter45"><input type="text"></td>
+    <tr class="steps step2 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
     </tr>
-    <tr class="row5" id="row5">
-      <td id="letter51" class="letter51"><input type="text"></td>
-      <td id="letter52" class="letter52"><input type="text"></td>
-      <td id="letter53" class="letter53"><input type="text"></td>
-      <td id="letter54" class="letter54"><input type="text"></td>
-      <td id="letter55" class="letter55"><input type="text"></td>
+    <tr class="steps step3 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
+    </tr>
+    <tr class="steps step4 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
+    </tr>
+    <tr class="steps step5 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
+    </tr>
+    <tr class="steps step6 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
+    </tr>
+    <tr class="steps step7 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
+    </tr>
+    <tr class="steps step8 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
+    </tr>
+    <tr class="steps step9 invisible">
+      <td class="gamer1 words"></td>
+      <td class="gamer1 counts"></td>
+      <td class="gamer2 words"></td>
+      <td class="gamer2 counts"></td>
+    </tr>
+    <tr class="scores invisible">
+      <td class="gamer1 words">Итого</td>
+      <td class="gamer1 score"></td>
+      <td class="gamer2 words">Итого</td>
+      <td class="gamer2 score"></td>
     </tr>
     </tbody>
   </table>
 </section>
+<script src="js/nouns.js"></script>
+<script src="js/dictionary.js"></script>
 <script src="js/common.js"></script>
 </body>
 
