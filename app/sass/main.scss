@@ -1,0 +1,9 @@
+@import "normalize.scss";
+
+@import "_fonts.scss";
+@import "_vars.scss";
+
+/* Импорт стилей блоков */
+@import "blocks/page.scss",
+"blocks/playfield.scss",
+"blocks/results.scss";

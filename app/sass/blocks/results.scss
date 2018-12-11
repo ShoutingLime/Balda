@@ -1,0 +1,100 @@
+.results {
+  outline: 1px solid green;
+  margin: 20px;
+  @media ($mobile-widths-only) {
+    width: 300px;
+    margin: 10px;
+  }
+  @media ($tablet-widths) {
+    width: 410px;
+  }
+  @media ($desktop-widths) {
+    width: 680px;
+  }
+}
+
+.results-title {
+  font-family: Roboto, Arial, sans-serif;
+  color: #fff;
+  text-align: center;
+  @media ($mobile-widths-only) {
+    font-size: 12px;
+  }
+  @media ($tablet-widths) {
+    font-size: 16px;
+    margin-top: 0;
+  }
+  @media ($desktop-widths) {
+    font-size: 18px;
+  }
+}
+
+.result-table {
+  outline: 1px solid magenta;
+  width: 100%;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  font-family: Roboto, Arial, sans-serif;
+  @media ($mobile-widths-only) {
+    font-size: 12px;
+  }
+  @media ($tablet-widths) {
+    font-size: 15px;
+  }
+  @media ($desktop-widths) {
+    font-size: 16px;
+  }
+}
+
+.result-table th {
+  border: 1px solid #000;
+  border-collapse: collapse;
+  background-color: #eee;
+  padding: 8px;
+  @media ($mobile-widths-only) {
+    padding: 4px;
+  }
+}
+
+input::-webkit-input-placeholder {
+  font-weight: 100;
+  font-style: italic;
+}
+
+input:-moz-placeholder {
+  font-weight: 100;
+  font-style: italic;
+}
+
+.result-table th input {
+  background-color: #eee;
+  border: none;
+  text-align: center;
+  color: $black;
+}
+
+.result-table td {
+  border: 1px solid #000;
+  border-collapse: collapse;
+  background-color: $white;
+  color: $black;
+  padding: 8px;
+}
+
+td.words {
+  width: 40%;
+}
+
+td.counts {
+  width: 10%;
+  text-align: center;
+}
+
+.scores td {
+  font-weight: 600;
+  background-color: #eee;
+}
+
+td.score {
+  text-align: center;
+}

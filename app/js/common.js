@@ -40,6 +40,10 @@
     gamer1score = document.querySelector('.gamer1.score'),
     gamer2score = document.querySelector('.gamer2.score');
 
+  // Кнопки
+  const cancelBtn = document.getElementById('cancel'),
+    reset = document.getElementById('reset');
+
   // Начальный счет
   let score1 = 0,
     score2 = 0;
@@ -58,6 +62,8 @@
 
   // Начальный ход
   let step = 0;
+
+  let self;
 
   // Обработка кликов с делегированием
   let selectedTd;
@@ -80,6 +86,8 @@
     oneLetterHide(target);
     russianLetter(target);
     openCeil(target);
+    self = target;
+    return self;
   };
 
   // Вывод рамки вокруг активной ячейки
@@ -304,16 +312,181 @@
   }
 
   // Новая игра
-  const reset = document.getElementById('reset');
   reset.addEventListener('click', function () {
     window.location.reload();
   });
 
-  // Отмена ввода последней буквы
-  const cancelBtn = document.getElementById('cancel');
-  cancelBtn.addEventListener('click', function () {
-    console.log('Отмена ввода последней буквы');
-  });
+  //Отмена ввода последней буквы
+  function cancelLastStep(e) {
+    cancelBtn.addEventListener('click', function () {
+      self.value = '';
+      self.removeAttribute('disabled');
+      if (self.parentNode.parentNode.classList.contains('letter12')) {
+        if (letter11.firstElementChild.firstElementChild.value.length === 0 &&
+          letter21.firstElementChild.firstElementChild.value.length === 0) {
+          letter11.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter22')) {
+        if (letter21.firstElementChild.firstElementChild.value.length === 0 &&
+          letter11.firstElementChild.firstElementChild.value.length === 0 &&
+          letter31.firstElementChild.firstElementChild.value.length === 0) {
+          letter21.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter32')) {
+        if (letter31.firstElementChild.firstElementChild.value.length === 0 &&
+          letter21.firstElementChild.firstElementChild.value.length === 0 &&
+          letter41.firstElementChild.firstElementChild.value.length === 0) {
+          letter31.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter42')) {
+        if (letter41.firstElementChild.firstElementChild.value.length === 0 &&
+          letter31.firstElementChild.firstElementChild.value.length === 0 &&
+          letter51.firstElementChild.firstElementChild.value.length === 0) {
+          letter41.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter52')) {
+        if (letter51.firstElementChild.firstElementChild.value.length === 0 &&
+          letter41.firstElementChild.firstElementChild.value.length === 0) {
+          letter51.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter14')) {
+        if (letter15.firstElementChild.firstElementChild.value.length === 0 &&
+          letter25.firstElementChild.firstElementChild.value.length === 0) {
+          letter15.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter24')) {
+        if (letter25.firstElementChild.firstElementChild.value.length === 0 &&
+          letter15.firstElementChild.firstElementChild.value.length === 0 &&
+          letter35.firstElementChild.firstElementChild.value.length === 0) {
+          letter25.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter34')) {
+        if (letter35.firstElementChild.firstElementChild.value.length === 0 &&
+          letter25.firstElementChild.firstElementChild.value.length === 0 &&
+          letter45.firstElementChild.firstElementChild.value.length === 0) {
+          letter35.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter44')) {
+        if (letter45.firstElementChild.firstElementChild.value.length === 0 &&
+          letter35.firstElementChild.firstElementChild.value.length === 0 &&
+          letter55.firstElementChild.firstElementChild.value.length === 0) {
+          letter45.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter54')) {
+        if (letter55.firstElementChild.firstElementChild.value.length === 0 &&
+          letter45.firstElementChild.firstElementChild.value.length === 0) {
+          letter55.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter11')) {
+        if (letter21.firstElementChild.firstElementChild.value.length === 0 &&
+          letter31.firstElementChild.firstElementChild.value.length === 0 &&
+          letter22.firstElementChild.firstElementChild.value.length === 0) {
+          letter21.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter21')) {
+        if (letter11.firstElementChild.firstElementChild.value.length === 0 &&
+          letter12.firstElementChild.firstElementChild.value.length === 0) {
+          letter11.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+        if (letter31.firstElementChild.firstElementChild.value.length === 0 &&
+          letter32.firstElementChild.firstElementChild.value.length === 0 &&
+          letter41.firstElementChild.firstElementChild.value.length === 0) {
+          letter31.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter31')) {
+        if (letter21.firstElementChild.firstElementChild.value.length === 0 &&
+          letter11.firstElementChild.firstElementChild.value.length === 0 &&
+          letter22.firstElementChild.firstElementChild.value.length === 0) {
+          letter21.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+        if (letter41.firstElementChild.firstElementChild.value.length === 0 &&
+          letter42.firstElementChild.firstElementChild.value.length === 0 &&
+          letter51.firstElementChild.firstElementChild.value.length === 0) {
+          letter41.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter41')) {
+        if (letter31.firstElementChild.firstElementChild.value.length === 0 &&
+          letter21.firstElementChild.firstElementChild.value.length === 0 &&
+          letter32.firstElementChild.firstElementChild.value.length === 0) {
+          letter31.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+        if (letter51.firstElementChild.firstElementChild.value.length === 0 &&
+          letter52.firstElementChild.firstElementChild.value.length === 0) {
+          letter51.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter51')) {
+        if (letter41.firstElementChild.firstElementChild.value.length === 0 &&
+          letter31.firstElementChild.firstElementChild.value.length === 0 &&
+          letter42.firstElementChild.firstElementChild.value.length === 0) {
+          letter41.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter15')) {
+        if (letter25.firstElementChild.firstElementChild.value.length === 0 &&
+          letter35.firstElementChild.firstElementChild.value.length === 0 &&
+          letter24.firstElementChild.firstElementChild.value.length === 0) {
+          letter25.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter25')) {
+        if (letter15.firstElementChild.firstElementChild.value.length === 0 &&
+          letter14.firstElementChild.firstElementChild.value.length === 0) {
+          letter15.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+        if (letter35.firstElementChild.firstElementChild.value.length === 0 &&
+          letter34.firstElementChild.firstElementChild.value.length === 0 &&
+          letter45.firstElementChild.firstElementChild.value.length === 0) {
+          letter35.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter35')) {
+        if (letter25.firstElementChild.firstElementChild.value.length === 0 &&
+          letter15.firstElementChild.firstElementChild.value.length === 0 &&
+          letter24.firstElementChild.firstElementChild.value.length === 0) {
+          letter25.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+        if (letter45.firstElementChild.firstElementChild.value.length === 0 &&
+          letter44.firstElementChild.firstElementChild.value.length === 0 &&
+          letter55.firstElementChild.firstElementChild.value.length === 0) {
+          letter45.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter45')) {
+        if (letter35.firstElementChild.firstElementChild.value.length === 0 &&
+          letter25.firstElementChild.firstElementChild.value.length === 0 &&
+          letter34.firstElementChild.firstElementChild.value.length === 0) {
+          letter35.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+        if (letter55.firstElementChild.firstElementChild.value.length === 0 &&
+          letter54.firstElementChild.firstElementChild.value.length === 0) {
+          letter55.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+      if (self.parentNode.parentNode.classList.contains('letter55')) {
+        if (letter45.firstElementChild.firstElementChild.value.length === 0 &&
+          letter35.firstElementChild.firstElementChild.value.length === 0 &&
+          letter44.firstElementChild.firstElementChild.value.length === 0) {
+          letter45.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+        }
+      }
+    });
+  }
+
+  cancelLastStep();
 
   // Показ введенного слова
   function showWord() {
@@ -354,6 +527,14 @@
     return word;
   });
 
+  // TODO Обеспечить корректность ввода букв при отправке слова на проверку
+  // TODO Сделать модуль подведения итогов
+  // TODO Изменить курсор на pointer при выборе букв в слово
+  // TODO Вычистить или заменить словарь
+  // TODO Исключить возможность последовательного ввода нескольких букв
+  // TODO Предусмотреть игру с компьютером
+  // TODO Предусмотреть игру с партнером по сети
+
   // Проверка наличия слова в словаре
   function checkWord(e) {
     const isWordInDictionary = document.querySelector('.is-word-in-dictionary')
@@ -364,7 +545,6 @@
         isWordInDictionary.innerHTML = '';
         wordsFieldSpace.innerHTML = '';
         let k = Math.floor((step - 1) / 2);
-        console.log('step = ' + step + ', k = ' + k);
         steps[k].classList.remove('invisible');
         scores.classList.remove('invisible');
         if((step - 1) % 2 === 0) {
@@ -386,6 +566,170 @@
       setTimeout(function () {
         isWordInDictionary.innerHTML = '';
         wordsFieldSpace.innerHTML = '';
+        self.value = '';
+        self.removeAttribute('disabled');
+        if (self.parentNode.parentNode.classList.contains('letter12')) {
+          if (letter11.firstElementChild.firstElementChild.value.length === 0 &&
+            letter21.firstElementChild.firstElementChild.value.length === 0) {
+            letter11.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter22')) {
+          if (letter21.firstElementChild.firstElementChild.value.length === 0 &&
+            letter11.firstElementChild.firstElementChild.value.length === 0 &&
+            letter31.firstElementChild.firstElementChild.value.length === 0) {
+            letter21.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter32')) {
+          if (letter31.firstElementChild.firstElementChild.value.length === 0 &&
+            letter21.firstElementChild.firstElementChild.value.length === 0 &&
+            letter41.firstElementChild.firstElementChild.value.length === 0) {
+            letter31.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter42')) {
+          if (letter41.firstElementChild.firstElementChild.value.length === 0 &&
+            letter31.firstElementChild.firstElementChild.value.length === 0 &&
+            letter51.firstElementChild.firstElementChild.value.length === 0) {
+            letter41.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter52')) {
+          if (letter51.firstElementChild.firstElementChild.value.length === 0 &&
+            letter41.firstElementChild.firstElementChild.value.length === 0) {
+            letter51.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter14')) {
+          if (letter15.firstElementChild.firstElementChild.value.length === 0 &&
+            letter25.firstElementChild.firstElementChild.value.length === 0) {
+            letter15.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter24')) {
+          if (letter25.firstElementChild.firstElementChild.value.length === 0 &&
+            letter15.firstElementChild.firstElementChild.value.length === 0 &&
+            letter35.firstElementChild.firstElementChild.value.length === 0) {
+            letter25.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter34')) {
+          if (letter35.firstElementChild.firstElementChild.value.length === 0 &&
+            letter25.firstElementChild.firstElementChild.value.length === 0 &&
+            letter45.firstElementChild.firstElementChild.value.length === 0) {
+            letter35.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter44')) {
+          if (letter45.firstElementChild.firstElementChild.value.length === 0 &&
+            letter35.firstElementChild.firstElementChild.value.length === 0 &&
+            letter55.firstElementChild.firstElementChild.value.length === 0) {
+            letter45.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter54')) {
+          if (letter55.firstElementChild.firstElementChild.value.length === 0 &&
+            letter45.firstElementChild.firstElementChild.value.length === 0) {
+            letter55.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter11')) {
+          if (letter21.firstElementChild.firstElementChild.value.length === 0 &&
+            letter31.firstElementChild.firstElementChild.value.length === 0 &&
+            letter22.firstElementChild.firstElementChild.value.length === 0) {
+            letter21.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter21')) {
+          if (letter11.firstElementChild.firstElementChild.value.length === 0 &&
+            letter12.firstElementChild.firstElementChild.value.length === 0) {
+            letter11.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+          if (letter31.firstElementChild.firstElementChild.value.length === 0 &&
+            letter32.firstElementChild.firstElementChild.value.length === 0 &&
+            letter41.firstElementChild.firstElementChild.value.length === 0) {
+            letter31.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter31')) {
+          if (letter21.firstElementChild.firstElementChild.value.length === 0 &&
+            letter11.firstElementChild.firstElementChild.value.length === 0 &&
+            letter22.firstElementChild.firstElementChild.value.length === 0) {
+            letter21.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+          if (letter41.firstElementChild.firstElementChild.value.length === 0 &&
+            letter42.firstElementChild.firstElementChild.value.length === 0 &&
+            letter51.firstElementChild.firstElementChild.value.length === 0) {
+            letter41.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter41')) {
+          if (letter31.firstElementChild.firstElementChild.value.length === 0 &&
+            letter21.firstElementChild.firstElementChild.value.length === 0 &&
+            letter32.firstElementChild.firstElementChild.value.length === 0) {
+            letter31.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+          if (letter51.firstElementChild.firstElementChild.value.length === 0 &&
+            letter52.firstElementChild.firstElementChild.value.length === 0) {
+            letter51.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter51')) {
+          if (letter41.firstElementChild.firstElementChild.value.length === 0 &&
+            letter31.firstElementChild.firstElementChild.value.length === 0 &&
+            letter42.firstElementChild.firstElementChild.value.length === 0) {
+            letter41.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter15')) {
+          if (letter25.firstElementChild.firstElementChild.value.length === 0 &&
+            letter35.firstElementChild.firstElementChild.value.length === 0 &&
+            letter24.firstElementChild.firstElementChild.value.length === 0) {
+            letter25.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter25')) {
+          if (letter15.firstElementChild.firstElementChild.value.length === 0 &&
+            letter14.firstElementChild.firstElementChild.value.length === 0) {
+            letter15.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+          if (letter35.firstElementChild.firstElementChild.value.length === 0 &&
+            letter34.firstElementChild.firstElementChild.value.length === 0 &&
+            letter45.firstElementChild.firstElementChild.value.length === 0) {
+            letter35.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter35')) {
+          if (letter25.firstElementChild.firstElementChild.value.length === 0 &&
+            letter15.firstElementChild.firstElementChild.value.length === 0 &&
+            letter24.firstElementChild.firstElementChild.value.length === 0) {
+            letter25.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+          if (letter45.firstElementChild.firstElementChild.value.length === 0 &&
+            letter44.firstElementChild.firstElementChild.value.length === 0 &&
+            letter55.firstElementChild.firstElementChild.value.length === 0) {
+            letter45.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter45')) {
+          if (letter35.firstElementChild.firstElementChild.value.length === 0 &&
+            letter25.firstElementChild.firstElementChild.value.length === 0 &&
+            letter34.firstElementChild.firstElementChild.value.length === 0) {
+            letter35.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+          if (letter55.firstElementChild.firstElementChild.value.length === 0 &&
+            letter54.firstElementChild.firstElementChild.value.length === 0) {
+            letter55.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
+        if (self.parentNode.parentNode.classList.contains('letter55')) {
+          if (letter45.firstElementChild.firstElementChild.value.length === 0 &&
+            letter35.firstElementChild.firstElementChild.value.length === 0 &&
+            letter44.firstElementChild.firstElementChild.value.length === 0) {
+            letter45.firstElementChild.firstElementChild.setAttribute('disabled', 'disabled');
+          }
+        }
       }, 1000);
     }
   }

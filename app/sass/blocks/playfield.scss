@@ -1,0 +1,182 @@
+.playfield {
+  outline: 1px solid yellow;
+  margin: 20px;
+  @media($mobile-widths-only) {
+    width: 255px;
+    margin: auto;
+  }
+}
+
+.playsquare td {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  color: #000;
+  font-family: "Roboto Mono", Courier, monospace;
+  font-size: 35px;
+  line-height: 50px;
+  text-align: center;
+  position: relative;
+}
+
+.playsquare td input {
+  width: 50px;
+  height: 50px;
+  color: #000;
+  border: none;
+  font-family: "Roboto Mono", Courier, monospace;
+  font-size: 35px;
+  line-height: 50px;
+  text-align: center;
+  box-sizing: border-box;
+  text-transform: uppercase;
+}
+
+.playsquare .letter13 input,
+.playsquare .letter23 input,
+.playsquare .letter33 input,
+.playsquare .letter43 input,
+.playsquare .letter53 input {
+  font-weight: 600;
+  color: $bordo;
+}
+
+.highlight input {
+  outline: 2px solid #000;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  font-size: 12px;
+  color: $black;
+  border-top: 1px solid $white;
+}
+
+.buttons button {
+  background-color: $white;
+  padding: 15px;
+  border-radius: 2px;
+  border: none;
+  transition: all 0.5s ease;
+}
+
+.buttons button:hover {
+  background-color: forestgreen;
+  color: $white;
+}
+
+.buttons button:active {
+  background-color: darkgreen;
+}
+
+.invisible {
+  display: none;
+}
+
+.showOneLetterMessage {
+  display: block;
+  position: absolute;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: thistle;
+  opacity: 0.7;
+  top: -25px;
+  left: 70px;
+  z-index: 200;
+  font-size: 14px;
+  width: 385px;
+}
+
+.nonRussianLetterMessage {
+  display: block;
+  position: absolute;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: khaki;
+  opacity: 0.7;
+  top: 25px;
+  left: 70px;
+  z-index: 200;
+  font-size: 14px;
+  width: 385px;
+}
+
+.wordsfield {
+  display: block;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: $white;
+  padding-bottom: 15px;
+}
+
+.wordsfield-title {
+  width: 100%;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.wordsfield-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.wordsfield-space {
+  width: 205px;
+  height: 36px;
+  background-color: $white;
+  font-family: Roboto, Arial, sans-serif;
+  color: $black;
+  border-radius: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 20px;
+  line-height: 36px;
+}
+
+.wordsfield-ok {
+  color: $bordo;
+  font-size: 25px;
+  border: none;
+  border-radius: 2px;
+  background-color: $white;
+  width: 36px;
+  transition: all 0.5s ease;
+}
+
+.wordsfield-ok:hover {
+  background-color: forestgreen;
+  color: $white;
+}
+
+.wordsfield-ok:active {
+  background-color: darkgreen;
+}
+
+.is-word-in-dictionary {
+  font-family: Roboto, Arial, sans-serif;
+  text-align: center;
+  color: $white;
+  font-size: 12px;
+  line-height: 20px;
+  padding-top: 15px;
+}
+
+.visually-hidden {
+  display: none;
+}
+
+input[disabled] {
+  transition: all 0.8s ease;
+}
+
+.highlight input[disabled] {
+  outline: none;
+}

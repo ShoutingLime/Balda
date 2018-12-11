@@ -1,0 +1,10 @@
+/.idea/
+/node_modules/
+/dist/
+/**/*.ai
+/**/*.log
+/**/*.pdf
+/**/*.psd
+/**/*.sublime*
+/**/Thumbs.db
+/**/.DS_Store

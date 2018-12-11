@@ -1,0 +1,41 @@
+html {
+  background-color: #000;
+}
+
+.page {
+  outline: 1px solid red;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  color: #fff;
+  @media($mobile-widths-only) {
+    width: 320px;
+    flex-direction: column;
+  }
+  @media($tablet-widths) {
+    width: 768px;
+  }
+  @media($desktop-widths) {
+    width: 1024px;
+  }
+}
+
+.page-title {
+  outline: 1px dotted blue;
+  width: 100%;
+  margin: 0 auto;
+  font-family: Roboto, Arial, sans-serif;
+  color: #fff;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  @media ($mobile-widths-only) {
+    font-size: 14px;
+  }
+  @media ($tablet-widths) {
+    font-size: 20px;
+  }
+  @media ($desktop-widths) {
+    font-size: 22px;
+  }
+}
