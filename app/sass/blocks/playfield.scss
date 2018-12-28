@@ -1,5 +1,4 @@
 .playfield {
-  outline: 1px solid yellow;
   margin: 20px;
   @media($mobile-widths-only) {
     width: 255px;
@@ -52,7 +51,7 @@
   padding-top: 15px;
   font-size: 12px;
   color: $black;
-  border-top: 1px solid $white;
+  //border-top: 1px solid $white;
 }
 
 .buttons button {
@@ -110,16 +109,7 @@
   font-size: 14px;
   color: $white;
   padding-bottom: 15px;
-}
-
-.wordsfield-title {
-  width: 100%;
-  font-family: Roboto, Arial, sans-serif;
-  font-size: 12px;
-  line-height: 20px;
-  text-align: center;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 40px;
 }
 
 .wordsfield-wrapper {
@@ -179,4 +169,34 @@ input[disabled] {
 
 .highlight input[disabled] {
   outline: none;
+}
+
+.can-select {
+  background-color: yellow;
+}
+
+.can-select:hover {
+  cursor: pointer;
+}
+
+.nonclick {
+  pointer-events: none;
+  input {
+    background-color: #aaa;
+  }
+}
+
+.selected {
+  background-color: cyan !important;
+}
+
+.buttons button.cancel[disabled] {
+  background-color: #eee !important;
+  color: #444;
+}
+
+.buttons button.cancel[disabled]:hover {
+  background-color: #eee !important;
+  color: #444;
+  cursor: not-allowed;
 }

@@ -8,54 +8,58 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400&amp;subset=cyrillic" rel="stylesheet">
   <link rel="stylesheet" href="css/main.min.css">
 </head>
 
 <body class="balda page">
 <h1 class="page-title">Игра «Балда»</h1>
+<section class="hints" id="hints">
+  <h2 class="hints-title">Подсказки по ходу игры:&nbsp;</h2>
+  <div class="hint-items">введите имена игроков</div>
+</section>
 <section class="playfield" id="playfield">
   <h2 class="visually-hidden">Поле игры</h2>
   <table class="playsquare" id="playsquare">
     <tbody>
       <tr class="row1" id="row1">
-        <td id="letter11" class="letter11"><label><input type="text" disabled></label></td>
-        <td id="letter12" class="letter12"><label><input type="text"></label></td>
-        <td id="letter13" class="letter13"><label><input type="text" disabled></label></td>
-        <td id="letter14" class="letter14"><label><input type="text"></label></td>
-        <td id="letter15" class="letter15"><label><input type="text" disabled></label></td>
+        <td id="letter11" class="letter11 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter12" class="letter12 nonclick"><label><input type="text"></label></td>
+        <td id="letter13" class="letter13 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter14" class="letter14 nonclick"><label><input type="text"></label></td>
+        <td id="letter15" class="letter15 nonclick"><label><input type="text" disabled></label></td>
       </tr>
       <tr class="row2" id="row2">
-        <td id="letter21" class="letter21"><label><input type="text" disabled></label></td>
-        <td id="letter22" class="letter22"><label><input type="text"></label></td>
-        <td id="letter23" class="letter23"><label><input type="text" disabled></label></td>
-        <td id="letter24" class="letter24"><label><input type="text"></label></td>
-        <td id="letter25" class="letter25"><label><input type="text" disabled></label></td>
+        <td id="letter21" class="letter21 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter22" class="letter22 nonclick"><label><input type="text"></label></td>
+        <td id="letter23" class="letter23 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter24" class="letter24 nonclick"><label><input type="text"></label></td>
+        <td id="letter25" class="letter25 nonclick"><label><input type="text" disabled></label></td>
       </tr>
       <tr class="row3" id="row3">
-        <td id="letter31" class="letter31"><label><input type="text" disabled></label></td>
-        <td id="letter32" class="letter32"><label><input type="text"></label></td>
-        <td id="letter33" class="letter33"><label><input type="text" disabled></label></td>
-        <td id="letter34" class="letter34"><label><input type="text"></label></td>
-        <td id="letter35" class="letter35"><label><input type="text" disabled></label></td>
+        <td id="letter31" class="letter31 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter32" class="letter32 nonclick"><label><input type="text"></label></td>
+        <td id="letter33" class="letter33 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter34" class="letter34 nonclick"><label><input type="text"></label></td>
+        <td id="letter35" class="letter35 nonclick"><label><input type="text" disabled></label></td>
       </tr>
       <tr class="row4" id="row4">
-        <td id="letter41" class="letter41"><label><input type="text" disabled></label></td>
-        <td id="letter42" class="letter42"><label><input type="text"></label></td>
-        <td id="letter43" class="letter43"><label><input type="text" disabled></label></td>
-        <td id="letter44" class="letter44"><label><input type="text"></label></td>
-        <td id="letter45" class="letter45"><label><input type="text" disabled></label></td>
+        <td id="letter41" class="letter41 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter42" class="letter42 nonclick"><label><input type="text"></label></td>
+        <td id="letter43" class="letter43 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter44" class="letter44 nonclick"><label><input type="text"></label></td>
+        <td id="letter45" class="letter45 nonclick"><label><input type="text" disabled></label></td>
       </tr>
       <tr class="row5" id="row5">
-        <td id="letter51" class="letter51"><label><input type="text" disabled></label></td>
-        <td id="letter52" class="letter52"><label><input type="text"></label></td>
-        <td id="letter53" class="letter53"><label><input type="text" disabled></label></td>
-        <td id="letter54" class="letter54"><label><input type="text"></label></td>
-        <td id="letter55" class="letter55"><label><input type="text" disabled></label></td>
+        <td id="letter51" class="letter51 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter52" class="letter52 nonclick"><label><input type="text"></label></td>
+        <td id="letter53" class="letter53 nonclick"><label><input type="text" disabled></label></td>
+        <td id="letter54" class="letter54 nonclick"><label><input type="text"></label></td>
+        <td id="letter55" class="letter55 nonclick"><label><input type="text" disabled></label></td>
       </tr>
     </tbody>
   </table>
   <div class="wordsfield visually-hidden" id="wordsfield">
-    <div class="wordsfield-title">Введите получившееся слово,<br>кликая на соответствующие буквы</div>
     <div class="wordsfield-wrapper">
       <div class="wordsfield-space"></div>
       <button class="wordsfield-ok" id="wordsfield-ok">&#128504;</button>
@@ -64,8 +68,8 @@
 
   </div>
   <div class="buttons">
-    <button class="cancel" id="cancel">Стереть букву</button>
-    <button class="reset" id="reset">Начать новую игру</button>
+    <button class="cancel visually-hidden" id="cancel" disabled>Стереть букву</button>
+    <button class="reset visually-hidden" id="reset">Начать новую игру</button>
   </div>
 </section>
 <section class="results">
@@ -73,7 +77,7 @@
   <table class="result-table">
     <tbody>
     <tr>
-      <th colspan="2" class="name1"><label><input type="text" placeholder="Введите имя игрока №1"></label></th>
+      <th colspan="2" class="name1"><label><input autofocus type="text" placeholder="Введите имя игрока №1"></label></th>
       <th colspan="2" class="name2"><label><input type="text" placeholder="Введите имя игрока №2"></label></th>
     </tr>
     <tr class="steps step0 invisible">

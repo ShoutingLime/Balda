@@ -1,5 +1,4 @@
 .results {
-  outline: 1px solid green;
   margin: 20px;
   @media ($mobile-widths-only) {
     width: 300px;
@@ -30,7 +29,6 @@
 }
 
 .result-table {
-  outline: 1px solid magenta;
   width: 100%;
   border: 1px solid #000;
   border-collapse: collapse;

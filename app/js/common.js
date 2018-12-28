@@ -26,6 +26,13 @@
     letter54 = document.getElementById('letter54'),
     letter55 = document.getElementById('letter55');
 
+  // Массив клеток
+  const ceilsArr = document.querySelectorAll('#playsquare td');
+
+  // Имена игроков
+  const name1 = document.querySelector('.name1 > label> input'),
+    name2 = document.querySelector('.name2 > label> input');
+
   // Ячейки результатов (слова и их длины)
   const ceilGamer1Words = document.querySelectorAll('.gamer1.words'),
     ceilGamer2Words = document.querySelectorAll('.gamer2.words'),
@@ -42,7 +49,11 @@
 
   // Кнопки
   const cancelBtn = document.getElementById('cancel'),
-    reset = document.getElementById('reset');
+    reset = document.getElementById('reset'),
+    wordsFieldOk = document.getElementById('wordsfield-ok');
+
+  // Поле для подсказок
+  const hintItems = document.querySelector('.hint-items');
 
   // Начальный счет
   let score1 = 0,
@@ -53,17 +64,43 @@
     rand = Math.floor(Math.random() * nouns.length), // выбор начального слова
     playsquare = document.querySelector('#playsquare');
   const wordsFieldSpace = document.querySelector('.wordsfield-space');
-
-  for (let i = 0; i < tds.length; i++) {
-    if (((i + 3) % 5) === 0) {
-      tds[i].value = nouns[rand][((i + 3) / 5) - 1];
-    }
-  }
+  name1.addEventListener('blur', function() { // проверяем указание имен игроков
+    name2.addEventListener('blur', function() {
+      if (name1.value !== '' && name2.value !== '') {
+        for (let i = 0; i < tds.length; i++) {
+          ceilsArr[i].classList.remove('nonclick');
+          if (((i + 3) % 5) === 0) {
+            tds[i].value = nouns[rand][((i + 3) / 5) - 1];
+          }
+        }
+        hintItems.innerHTML = 'впишите букву в одну из белых клеточек так, чтобы получилось новое слово';
+        cancelBtn.classList.remove('visually-hidden');
+        reset.classList.remove('visually-hidden');
+      }
+    });
+    name2.addEventListener('keydown', function (e) {
+      if (e.keyCode === 13) { // нажатие Enter
+        if (name1.value !== '' && name2.value !== '') {
+          for (let i = 0; i < tds.length; i++) {
+            ceilsArr[i].classList.remove('nonclick');
+            if (((i + 3) % 5) === 0) {
+              tds[i].value = nouns[rand][((i + 3) / 5) - 1];
+            }
+          }
+          hintItems.innerHTML = 'впишите букву в одну из белых клеточек так, чтобы получилось новое слово';
+          cancelBtn.classList.remove('visually-hidden');
+          reset.classList.remove('visually-hidden');
+        }
+      }
+    })
+  });
 
   // Начальный ход
   let step = 0;
 
   let self;
+
+  console.log(step);
 
   // Обработка кликов с делегированием
   let selectedTd;
@@ -80,6 +117,7 @@
 
   // Запрет на введение в ячейку более одного символа
   playsquare.oninput = function (event) {
+    console.log('Ой-ой-ой!');
     let target = event.target;
     oneLetter(target);
     truncate(target);
@@ -97,17 +135,16 @@
     }
     selectedTd = node;
     selectedTd.classList.add('highlight');
+    console.log('Отработала функция highlight');
   }
 
   // Вывод сообщения о недопустимости ввода нескольких букв
   function oneLetter(e) {
     if (e.value.length > 1) {
-      const showOneLetterMessage = document.createElement('div');
       const oneLetterMessage = document.querySelector('.showOneLetterMessage') || null;
       if (!e.parentNode.contains(oneLetterMessage)) {
-        showOneLetterMessage.innerHTML = 'В одной клетке может быть только одна буква';
-        showOneLetterMessage.classList.add('showOneLetterMessage');
-        e.parentNode.appendChild(showOneLetterMessage);
+        hintItems.innerHTML = 'в одной клетке может быть только одна буква';
+        console.log('Отработала функция oneLetter');
       }
       return e;
     }
@@ -120,6 +157,7 @@
         const showOneLetterMessage = document.querySelector('.showOneLetterMessage');
         if (showOneLetterMessage) {
           e.parentNode.removeChild(showOneLetterMessage);
+          console.log('Отработала функция oneLetterHide');
         }
       }
     }, 1000);
@@ -129,29 +167,36 @@
   function truncate(e) {
     setTimeout(function () {
       e.value = e.value.slice(0, 1);
+      console.log('Отработала функция truncate');
     }, 1000);
   }
 
   // Проверка, что вставляется русская буква
-  function russianLetter(e) {
-    if (!(e.value.match(/[а-яё]/i))) {
-      showNonRussianLetter(e);
-      deleteNonRussianLetter(e);
-      hideNonRussianLetter(e);
-    } else {
-      e.setAttribute('disabled', 'disabled');
+  function russianLetter(z) {
+    if (!(z.value.match(/[а-яё]/i))) {
+      showNonRussianLetter(z);
+      deleteNonRussianLetter(z);
+    }
+    if(z.value.match(/[а-яё]/i)) {
+      z.setAttribute('disabled', 'disabled');
       showWord();
+      for (let l = 0; l < tds.length; l++) {
+        if(tds[l].value.length === 0) {
+          ceilsArr[l].classList.add('nonclick');
+        } else {
+          ceilsArr[l].classList.remove('nonclick');
+        }
+      }
+      console.log('Отработала функция russianLetter');
     }
   }
 
   // Показ сообщения о нерусских буквах
   function showNonRussianLetter(e) {
-    const nonRussianLetterMessage = document.createElement('div');
     const nonRussianLetterMessageText = document.querySelector('.nonRussianLetterMessage') || null;
     if (!e.parentNode.contains(nonRussianLetterMessageText)) {
-      nonRussianLetterMessage.innerHTML = 'Это не русская буква';
-      nonRussianLetterMessage.classList.add('nonRussianLetterMessage');
-      e.parentNode.appendChild(nonRussianLetterMessage);
+      hintItems.innerHTML = 'это не русская буква, введите русскую букву';
+      console.log('Отработала функция showNonRussianLetter');
     }
     return e;
   }
@@ -160,18 +205,7 @@
   function deleteNonRussianLetter(e) {
     setTimeout(function () {
       e.value = e.value.slice(0, 0);
-    }, 1000);
-  }
-
-  // Скрытие сообщения о недопустимости ввода не русских букв
-  function hideNonRussianLetter(e) {
-    setTimeout(function () {
-      if (e.value.length === 0 || e.value.length === 1) {
-        const nonRussianLetterMessage = document.querySelector('.nonRussianLetterMessage');
-        if (nonRussianLetterMessage) {
-          e.parentNode.removeChild(nonRussianLetterMessage);
-        }
-      }
+      console.log('Отработала функция deleteNonRussianLetter');
     }, 1000);
   }
 
@@ -308,6 +342,7 @@
           letter45.firstElementChild.firstElementChild.removeAttribute('disabled');
         }
       }
+      console.log('Отработала функция openCeil');
     }
   }
 
@@ -317,7 +352,7 @@
   });
 
   //Отмена ввода последней буквы
-  function cancelLastStep(e) {
+  function cancelLastStep() {
     cancelBtn.addEventListener('click', function () {
       self.value = '';
       self.removeAttribute('disabled');
@@ -484,6 +519,7 @@
         }
       }
     });
+    console.log('Отработала функция cancelLastStep');
   }
 
   cancelLastStep();
@@ -492,6 +528,9 @@
   function showWord() {
     const wordsField = document.getElementById('wordsfield');
     wordsField.classList.remove('visually-hidden');
+    hintItems.innerHTML = 'введите получившееся слово, кликая на соответствующие буквы, затем кликните на кнопку с' +
+      ' галочкой или нажмите Enter';
+    cancelBtn.removeAttribute('disabled');
     enterWord();
   }
 
@@ -500,36 +539,337 @@
     playsquare.onclick = function (event) {
       let target = event.target;
       while (target !== playsquare) {
-        if (target.tagName === 'TD') {
-          pickLetter(target);
+        if (target.tagName === 'TD' && target.firstElementChild.firstElementChild.value !== '') {
+          pickLetter(target); // TODO Проблема здесь!
           return;
         }
         target = target.parentNode;
       }
     };
+    console.log('Отработала функция enterWord');
   }
 
   // Составление слова посредством кликов
   let word = '';
   function pickLetter(e) {
+    for (let m = 0; m < ceilsArr.length; m++) {
+      tds[m].classList.remove('can-select');
+    }
     let i = e.querySelector('label > input').value;
     word = word + i;
+    if (e.classList.contains('letter11')) {
+      letter11.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter12.firstElementChild.firstElementChild.value.length !== 0) {
+        letter12.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter21.firstElementChild.firstElementChild.value.length !== 0) {
+        letter21.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter12')) {
+      letter12.firstElementChild.firstElementChild.classList.add('selected');
+      letter13.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter11.firstElementChild.firstElementChild.value.length !== 0) {
+        letter11.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter22.firstElementChild.firstElementChild.value.length !== 0) {
+        letter22.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter13')) {
+      letter13.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter12.firstElementChild.firstElementChild.value.length !== 0) {
+        letter12.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter14.firstElementChild.firstElementChild.value.length !== 0) {
+        letter14.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter23.firstElementChild.firstElementChild.value.length !== 0) {
+        letter23.firstElementChild.firstElementChild.classList.add('can-select');
+        letter23.firstElementChild.firstElementChild.classList.remove('nonclick');
+      }
+    }
+    if (e.classList.contains('letter14')) {
+      letter14.firstElementChild.firstElementChild.classList.add('selected');
+      letter13.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter15.firstElementChild.firstElementChild.value.length !== 0) {
+        letter15.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter24.firstElementChild.firstElementChild.value.length !== 0) {
+        letter24.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter15')) {
+      letter15.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter14.firstElementChild.firstElementChild.value.length !== 0) {
+        letter14.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter25.firstElementChild.firstElementChild.value.length !== 0) {
+        letter25.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter21')) {
+      letter21.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter11.firstElementChild.firstElementChild.value.length !== 0) {
+        letter11.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter22.firstElementChild.firstElementChild.value.length !== 0) {
+        letter22.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter31.firstElementChild.firstElementChild.value.length !== 0) {
+        letter31.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter22')) {
+      letter22.firstElementChild.firstElementChild.classList.add('selected');
+      letter23.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter12.firstElementChild.firstElementChild.value.length !== 0) {
+        letter12.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter21.firstElementChild.firstElementChild.value.length !== 0) {
+        letter21.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter32.firstElementChild.firstElementChild.value.length !== 0) {
+        letter32.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter23')) {
+      letter23.firstElementChild.firstElementChild.classList.add('selected');
+      letter13.firstElementChild.firstElementChild.classList.add('can-select');
+      letter33.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter22.firstElementChild.firstElementChild.value.length !== 0) {
+        letter22.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter24.firstElementChild.firstElementChild.value.length !== 0) {
+        letter24.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter24')) {
+      letter24.firstElementChild.firstElementChild.classList.add('selected');
+      letter23.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter14.firstElementChild.firstElementChild.value.length !== 0) {
+        letter14.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter25.firstElementChild.firstElementChild.value.length !== 0) {
+        letter25.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter34.firstElementChild.firstElementChild.value.length !== 0) {
+        letter34.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter25')) {
+      letter25.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter24.firstElementChild.firstElementChild.value.length !== 0) {
+        letter24.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter15.firstElementChild.firstElementChild.value.length !== 0) {
+        letter15.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter35.firstElementChild.firstElementChild.value.length !== 0) {
+        letter35.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter31')) {
+      letter31.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter21.firstElementChild.firstElementChild.value.length !== 0) {
+        letter21.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter32.firstElementChild.firstElementChild.value.length !== 0) {
+        letter32.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter41.firstElementChild.firstElementChild.value.length !== 0) {
+        letter41.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter32')) {
+      letter32.firstElementChild.firstElementChild.classList.add('selected');
+      letter33.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter22.firstElementChild.firstElementChild.value.length !== 0) {
+        letter22.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter31.firstElementChild.firstElementChild.value.length !== 0) {
+        letter31.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter42.firstElementChild.firstElementChild.value.length !== 0) {
+        letter42.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter33')) {
+      letter33.firstElementChild.firstElementChild.classList.add('selected');
+      letter23.firstElementChild.firstElementChild.classList.add('can-select');
+      letter43.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter32.firstElementChild.firstElementChild.value.length !== 0) {
+        letter32.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter34.firstElementChild.firstElementChild.value.length !== 0) {
+        letter34.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter34')) {
+      letter34.firstElementChild.firstElementChild.classList.add('selected');
+      letter33.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter24.firstElementChild.firstElementChild.value.length !== 0) {
+        letter24.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter35.firstElementChild.firstElementChild.value.length !== 0) {
+        letter35.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter44.firstElementChild.firstElementChild.value.length !== 0) {
+        letter44.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter35')) {
+      letter35.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter25.firstElementChild.firstElementChild.value.length !== 0) {
+        letter25.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter34.firstElementChild.firstElementChild.value.length !== 0) {
+        letter34.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter45.firstElementChild.firstElementChild.value.length !== 0) {
+        letter45.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter41')) {
+      letter41.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter31.firstElementChild.firstElementChild.value.length !== 0) {
+        letter31.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter42.firstElementChild.firstElementChild.value.length !== 0) {
+        letter42.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter51.firstElementChild.firstElementChild.value.length !== 0) {
+        letter51.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter42')) {
+      letter42.firstElementChild.firstElementChild.classList.add('selected');
+      letter43.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter32.firstElementChild.firstElementChild.value.length !== 0) {
+        letter32.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter41.firstElementChild.firstElementChild.value.length !== 0) {
+        letter41.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter52.firstElementChild.firstElementChild.value.length !== 0) {
+        letter52.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter43')) {
+      letter43.firstElementChild.firstElementChild.classList.add('selected');
+      letter33.firstElementChild.firstElementChild.classList.add('can-select');
+      letter53.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter42.firstElementChild.firstElementChild.value.length !== 0) {
+        letter42.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter44.firstElementChild.firstElementChild.value.length !== 0) {
+        letter44.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter44')) {
+      letter44.firstElementChild.firstElementChild.classList.add('selected');
+      letter43.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter34.firstElementChild.firstElementChild.value.length !== 0) {
+        letter34.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter45.firstElementChild.firstElementChild.value.length !== 0) {
+        letter45.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter54.firstElementChild.firstElementChild.value.length !== 0) {
+        letter54.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter45')) {
+      letter45.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter35.firstElementChild.firstElementChild.value.length !== 0) {
+        letter35.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter44.firstElementChild.firstElementChild.value.length !== 0) {
+        letter44.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter55.firstElementChild.firstElementChild.value.length !== 0) {
+        letter55.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter51')) {
+      letter51.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter41.firstElementChild.firstElementChild.value.length !== 0) {
+        letter41.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter52.firstElementChild.firstElementChild.value.length !== 0) {
+        letter52.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter52')) {
+      letter52.firstElementChild.firstElementChild.classList.add('selected');
+      letter53.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter42.firstElementChild.firstElementChild.value.length !== 0) {
+        letter42.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter51.firstElementChild.firstElementChild.value.length !== 0) {
+        letter51.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter53')) {
+      letter53.firstElementChild.firstElementChild.classList.add('selected');
+      letter43.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter52.firstElementChild.firstElementChild.value.length !== 0) {
+        letter52.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter54.firstElementChild.firstElementChild.value.length !== 0) {
+        letter54.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter54')) {
+      letter54.firstElementChild.firstElementChild.classList.add('selected');
+      letter53.firstElementChild.firstElementChild.classList.add('can-select');
+      if (letter44.firstElementChild.firstElementChild.value.length !== 0) {
+        letter44.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter55.firstElementChild.firstElementChild.value.length !== 0) {
+        letter55.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    if (e.classList.contains('letter55')) {
+      letter55.firstElementChild.firstElementChild.classList.add('selected');
+      if (letter45.firstElementChild.firstElementChild.value.length !== 0) {
+        letter45.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+      if (letter54.firstElementChild.firstElementChild.value.length !== 0) {
+        letter54.firstElementChild.firstElementChild.classList.add('can-select');
+      }
+    }
+    for (let j = 0; j < ceilsArr.length; j++) {
+      if (!(tds[j].classList.contains('can-select'))) {
+        ceilsArr[j].classList.add('nonclick');
+      } else {
+        ceilsArr[j].classList.remove('nonclick');
+      }
+    }
     wordsFieldSpace.innerHTML = word;
+    console.log('Отработала функция pickLetter');
     return word;
   }
 
   // Отправка слова на проверку и очистка поля ввода букв
-  const wordsFieldOk = document.getElementById('wordsfield-ok');
   wordsFieldOk.addEventListener('click', function (e) {
     e.preventDefault();
     checkWord(word);
+    for (let k = 0; k < ceilsArr.length; k++) {
+      tds[k].classList.remove('selected');
+      tds[k].classList.remove('can-select');
+      ceilsArr[k].classList.remove('nonclick');
+    }
     word = '';
+    console.log('Отработала отправка слова на проверку');
     return word;
   });
 
+  // TODO Задать последовательность действий: выбор имен, первый ход, ввод слова и т.д.
   // TODO Обеспечить корректность ввода букв при отправке слова на проверку
+  // TODO Сделать проверку, что слово содержит последнюю введенную букву
+  // TODO Сделать проверку, что введенное слово не совпадает с начальным и не вводилось раньше
   // TODO Сделать модуль подведения итогов
-  // TODO Изменить курсор на pointer при выборе букв в слово
   // TODO Вычистить или заменить словарь
   // TODO Исключить возможность последовательного ввода нескольких букв
   // TODO Предусмотреть игру с компьютером
@@ -547,6 +887,7 @@
         let k = Math.floor((step - 1) / 2);
         steps[k].classList.remove('invisible');
         scores.classList.remove('invisible');
+        hintItems.innerHTML = 'впишите букву в одну из белых клеточек так, чтобы получилось новое слово';
         if((step - 1) % 2 === 0) {
           ceilGamer1Words[k].innerHTML = e;
           ceilGamer1Counts[k].innerHTML = e.length;
@@ -558,8 +899,109 @@
           score2 = score2 + e.length;
           gamer2score.innerHTML = score2;
         }
+
+
+
+        console.log('Делаем кнопки с буквами некликабельными');
+        if (letter11.firstElementChild.firstElementChild.value.length !== 0) {
+          letter11.classList.add('nonclick');
+        }
+        if (letter12.firstElementChild.firstElementChild.value.length !== 0) {
+          letter12.classList.add('nonclick');
+        }
+        if (letter13.firstElementChild.firstElementChild.value.length !== 0) {
+          letter13.classList.add('nonclick');
+        }
+        if (letter14.firstElementChild.firstElementChild.value.length !== 0) {
+          letter14.classList.add('nonclick');
+        }
+        if (letter15.firstElementChild.firstElementChild.value.length !== 0) {
+          letter15.classList.add('nonclick');
+        }
+        if (letter21.firstElementChild.firstElementChild.value.length !== 0) {
+          letter21.classList.add('nonclick');
+        }
+        if (letter22.firstElementChild.firstElementChild.value.length !== 0) {
+          letter22.classList.add('nonclick');
+        }
+        if (letter23.firstElementChild.firstElementChild.value.length !== 0) {
+          letter23.classList.add('nonclick');
+        }
+        if (letter24.firstElementChild.firstElementChild.value.length !== 0) {
+          letter24.classList.add('nonclick');
+        }
+        if (letter25.firstElementChild.firstElementChild.value.length !== 0) {
+          letter25.classList.add('nonclick');
+        }
+        if (letter31.firstElementChild.firstElementChild.value.length !== 0) {
+          letter31.classList.add('nonclick');
+        }
+        if (letter32.firstElementChild.firstElementChild.value.length !== 0) {
+          letter32.classList.add('nonclick');
+        }
+        if (letter33.firstElementChild.firstElementChild.value.length !== 0) {
+          letter33.classList.add('nonclick');
+        }
+        if (letter34.firstElementChild.firstElementChild.value.length !== 0) {
+          letter34.classList.add('nonclick');
+        }
+        if (letter35.firstElementChild.firstElementChild.value.length !== 0) {
+          letter35.classList.add('nonclick');
+        }
+        if (letter41.firstElementChild.firstElementChild.value.length !== 0) {
+          letter41.classList.add('nonclick');
+        }
+        if (letter42.firstElementChild.firstElementChild.value.length !== 0) {
+          letter42.classList.add('nonclick');
+        }
+        if (letter43.firstElementChild.firstElementChild.value.length !== 0) {
+          letter43.classList.add('nonclick');
+        }
+        if (letter44.firstElementChild.firstElementChild.value.length !== 0) {
+          letter44.classList.add('nonclick');
+        }
+        if (letter45.firstElementChild.firstElementChild.value.length !== 0) {
+          letter45.classList.add('nonclick');
+        }
+        if (letter51.firstElementChild.firstElementChild.value.length !== 0) {
+          letter51.classList.add('nonclick');
+        }
+        if (letter52.firstElementChild.firstElementChild.value.length !== 0) {
+          letter52.classList.add('nonclick');
+        }
+        if (letter53.firstElementChild.firstElementChild.value.length !== 0) {
+          letter53.classList.add('nonclick');
+        }
+        if (letter54.firstElementChild.firstElementChild.value.length !== 0) {
+          letter54.classList.add('nonclick');
+        }
+        if (letter55.firstElementChild.firstElementChild.value.length !== 0) {
+          letter55.classList.add('nonclick');
+        }
+
+
+
+
+        let winner;
+        if(step === 20) {
+          if(score2 > score1) {
+            winner = name2.value;
+            hintItems.innerHTML = 'Игра окончена. Победитель – ' + winner + '.';
+          }
+          if(score2 < score1) {
+            winner = name1.value;
+            hintItems.innerHTML = 'Игра окончена. Победитель – ' + winner + '.';
+          }
+          if(score2 === score1) {
+            hintItems.innerHTML = 'Игра окончена. Результат – ничья.';
+          }
+          playsquare.classList.add('nonclick');
+        }
+        console.log(score1);
+        console.log(score2);
       }, 1000);
       step++;
+      console.log('Отработала функция checkWord');
     } else {
       isWordInDictionary.innerHTML = 'Такого слова в словаре нет';
       isWordInDictionary.style.color = 'red';
@@ -568,6 +1010,7 @@
         wordsFieldSpace.innerHTML = '';
         self.value = '';
         self.removeAttribute('disabled');
+        hintItems.innerHTML = 'такого слова в нашем словаре нет, попробуйте другой вариант';
         if (self.parentNode.parentNode.classList.contains('letter12')) {
           if (letter11.firstElementChild.firstElementChild.value.length === 0 &&
             letter21.firstElementChild.firstElementChild.value.length === 0) {
